@@ -147,7 +147,9 @@ foreach ($cms as $cm) {
 	$contaRecAtNoCurso++;
 } 
 			
-foreach ($modinfo->instances['assignment'] as $cm) {
+/*foreach ($modinfo->instances['assignment'] as $cm) {*/
+foreach ($modinfo->instances['assign'] as $cm) {
+	echo $cm->name;
 	if (!$cm->uservisible) {
 		continue;
 	}
