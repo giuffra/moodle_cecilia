@@ -36,9 +36,9 @@ require_course_login($course, true);
 // get list of all resource-like modules
 $allmodules = $DB->get_records('modules', array('visible'=>1));
 $modules = array();
-echo $modules;
 foreach ($allmodules as $key=>$module) {
     $modname = $module->name;
+	echo " ".$modname;
     $libfile = "$CFG->dirroot/mod/$modname/lib.php";
     if (!file_exists($libfile)) {
         continue;
