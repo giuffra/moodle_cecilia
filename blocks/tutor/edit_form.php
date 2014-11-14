@@ -1,0 +1,24 @@
+<?php
+ 
+class block_tutor_edit_form extends block_edit_form {
+ 
+    protected function specific_definition($mform) {
+ 
+        // Section header title according to language file.
+        $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
+ /*
+		// A sample string variable with a default value.
+        $mform->addElement('text', 'config_text', get_string('blockstring', 'block_tutor'));
+        $mform->setDefault('config_text', 'default value');
+        $mform->setType('config_text', PARAM_MULTILANG);  
+
+		if (! empty($this->config->text)) {
+			$this->content->text = $this->config->text;
+		}	
+*/
+		// A sample string variable with a default value (title).
+		$mform->addElement('text', 'config_title', get_string('blocktitle', 'block_tutor'));
+		$mform->setDefault('config_title', 'default value');
+		$mform->setType('config_title', PARAM_MULTILANG);
+    }
+}
