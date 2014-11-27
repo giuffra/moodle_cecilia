@@ -71,7 +71,7 @@ $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
 $cms = array();
 $resources = array();
-$assignment = array();
+$assign = array();
 
 
 foreach ($modinfo->cms as $cm) {
@@ -117,7 +117,7 @@ foreach ($cms as $cm) {
 }
 ?>
 <?php
-foreach ($modinfo->instances['assignment'] as $cm) {
+foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -185,7 +185,7 @@ foreach($preRequi as $pre){
 				}
 		}
 	}
-    foreach ($modinfo->instances['assignment'] as $cm) {
+    foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		

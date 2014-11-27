@@ -73,7 +73,7 @@ $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
 $cms = array();
 $resources = array();
-$assignment = array();
+$assign = array();
 
 
 foreach ($modinfo->cms as $cm) {
@@ -145,7 +145,7 @@ $recInicial = isset($_POST['recurso']) ? $_POST['recurso'] : NULL;
 	}
 
 $ativInicial = isset($_POST['atividade']) ? $_POST['atividade'] : NULL;
-    foreach ($modinfo->instances['assignment'] as $cm) {
+    foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -190,7 +190,7 @@ foreach ($result as $res){
 			echo "Recurso Inicial: ".$cm->name.'<br>';
 		}
 	}
-	foreach ($modinfo->instances['assignment'] as $cm) {
+	foreach ($modinfo->instances['assign'] as $cm) {
 		if (($cm->id == $res->rec_ativ_id) and ($ativLista < '1') and (!$ati)){
 			$ativLista++;
 			echo "Atividade Inicial: ".$cm->name.'<br>';
@@ -217,7 +217,7 @@ foreach ($result1 as $res1){
 			$arrRec[$res1->rec_ativ_id]++; 			
 		}		
 	}
-	foreach ($modinfo->instances['assignment'] as $cm) {
+	foreach ($modinfo->instances['assign'] as $cm) {
 		if ($cm->id == $res1->rec_ativ_id){ 
 			$arrAtiv[$res1->rec_ativ_id]++; 			
 		}
@@ -251,7 +251,7 @@ foreach ($result1 as $res1){
 		}
 	} ?>
 	
-	<?php foreach ($modinfo->instances['assignment'] as $cm) {
+	<?php foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}

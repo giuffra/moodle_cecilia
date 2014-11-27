@@ -71,7 +71,7 @@ $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
 $cms = array();
 $resources = array();
-$assignment = array();
+$assign = array(); 
 
 
 foreach ($modinfo->cms as $cm) {
@@ -115,7 +115,7 @@ foreach ($cms as $cm) {
 			echo "Recurso Inicial: ".$cm->name."<br>";		
 		}
 }
-foreach ($modinfo->instances['assignment'] as $cm) {
+foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -162,7 +162,7 @@ foreach ($cms as $cm) {
 			$var[1] = $string;		
 		}
 }
-foreach ($modinfo->instances['assignment'] as $cm) {
+foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		

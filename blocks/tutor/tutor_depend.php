@@ -71,7 +71,7 @@ $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
 $cms = array();
 $resources = array();
-$assignment = array();
+$assign = array();
 
 
 foreach ($modinfo->cms as $cm) {
@@ -136,7 +136,7 @@ foreach ($cms as $cm) {
 }
 ?>
 <?php
-foreach ($modinfo->instances['assignment'] as $cm) {
+foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -173,7 +173,7 @@ foreach ($modinfo->instances['assignment'] as $cm) {
 			$_SESSION['selecionada'] = $cm->name;
 		}
 	}
-    foreach ($modinfo->instances['assignment'] as $cm) {
+    foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -248,7 +248,7 @@ foreach($arrRecAtivDoPre as $RADP){
 		echo "<br>";
 		?>
 	Atividades:<br>	
-	<?php foreach ($modinfo->instances['assignment'] as $cm) {
+	<?php foreach ($modinfo->instances['assign'] as $cm) {
 		$AtiCont++;
 		if (!$cm->uservisible) {
 			continue;

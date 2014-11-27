@@ -73,7 +73,7 @@ $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
 $cms = array();
 $resources = array();
-$assignment = array();
+$assign = array();
 
 if (isset($_GET['acao'])){
 	$acao = $_GET['acao'];
@@ -147,9 +147,8 @@ foreach ($cms as $cm) {
 	$contaRecAtNoCurso++;
 } 
 			
-/*foreach ($modinfo->instances['assignment'] as $cm) {*/
 foreach ($modinfo->instances['assign'] as $cm) {
-	echo $cm->name;
+	//echo $cm->name;
 	if (!$cm->uservisible) {
 		continue;
 	}
@@ -203,7 +202,10 @@ if ($contaAtividadesComPerfil < $contaRecAtNoCurso){
 	} ?>
 		
 		<br><br><b>Atividades:</b><br><br>
-<?php foreach ($modinfo->instances['assignment'] as $cm) {
+		
+		
+<?php foreach ($modinfo->instances['assign'] as $cm) {
+		
 		if (!$cm->uservisible) {
 			continue;
 		}	
@@ -226,7 +228,39 @@ if ($contaAtividadesComPerfil < $contaRecAtNoCurso){
 			echo $cm->name;
 			echo "<br>";		
 	}	
-		?>
+	
+	?>
+	
+	<br><br><b>Questionários:</b><br><br>
+		
+		
+<?php foreach ($modinfo->instances['quiz'] as $cm) {
+	
+		if (!$cm->uservisible) {
+			continue;
+		}	
+		 ?>
+			<SELECT style="margin-right:10px; width:120px" NAME="perfilRec[]" required="required">
+		<?php
+		if (in_array($cm->id, $ativComPerfil)){
+			foreach($result4 as $res4){	
+				if ($res4->id == $perfilDaAtivID[$cm->id]) {?>		
+				<OPTION SELECTED value="<?php echo $cm->id.",".$res4->id; ?>"><?php echo $res4->nome ?></OPTION> <?php }else{ ?>
+				<OPTION value="<?php echo $cm->id.",".$res4->id; ?>"><?php echo $res4->nome ?></OPTION><?php				
+			}}
+		}else{	
+			?>
+			<OPTION SELECTED></OPTION><?php
+			foreach($result4 as $res4){	?>		
+				<OPTION value="<?php echo $cm->id.",".$res4->id; ?>"><?php echo $res4->nome ?></OPTION><?php				
+			}}?> 
+		</SELECT> <?php
+			echo $cm->name;
+			echo "<br>";		
+	}	
+	?>
+	
+		
 			<br><input type="submit" style="width: 100px;" value="Grava Perfil" />
 		</form>
 
@@ -237,7 +271,7 @@ if ($contaAtividadesComPerfil < $contaRecAtNoCurso){
 	<html>
 		<form name="listaRecAtiv" method="post" action="tutor_lista.php?id=<?php echo $id ?>">
 	  <b></b>Selecione um recurso e uma atividade para iniciar o estudo:</b><br><br>
-	   <b>Recursos:</b><br><br>
+	   <b>Recurso inicial:</b><br><br>
 		   <?php foreach ($cms as $cm) {
 			if (!isset($resources[$cm->modname][$cm->instance])) {
 				continue;
@@ -248,8 +282,19 @@ if ($contaAtividadesComPerfil < $contaRecAtNoCurso){
 			value="<?php echo $cm->id ?>"> <?php echo $resource->name ?><br>
 		<?php } ?>
 		
-		<br><br><b>Atividades:</b><br><br>
-		<?php foreach ($modinfo->instances['assignment'] as $cm) {
+		<br><br><b>Atividade inicial:</b><br><br>
+		<?php foreach ($modinfo->instances['assign'] as $cm) {
+			if (!$cm->uservisible) {
+				continue;
+			}	
+		 ?>	
+			  <input type="radio" name="atividade" required="required"
+			value="<?php echo $cm->id ?>"> <?php echo $cm->name ?><br>
+			
+			
+		<?php  }	
+		
+		foreach ($modinfo->instances['quiz'] as $cm) {
 			if (!$cm->uservisible) {
 				continue;
 			}	
@@ -290,7 +335,7 @@ foreach ($result as $res){
 			$_SESSION['idRecInic'] = $cm->id;
 		}
 	}
-	foreach ($modinfo->instances['assignment'] as $cm) {
+	foreach ($modinfo->instances['assign'] as $cm) {
 		if (($cm->id == $res->rec_ativ_id) and ($ativLista < '1')){ // and (!$ati)
 			$ativLista++;
 			echo "Atividade Inicial: ".$cm->name.'<br>';
@@ -298,6 +343,16 @@ foreach ($result as $res){
 			$_SESSION['idAtivInic'] = $cm->id;
 		}
 	}
+	/*****************************************************************************************************************************
+	foreach ($modinfo->instances['quiz'] as $cm) {
+		if (($cm->id == $res->rec_ativ_id) and ($ativLista < '1')){ // and (!$ati)
+			$ativLista++;
+			echo "Atividade Inicial: ".$cm->name.'<br>';
+			$_SESSION['idForumInic'] = '';
+			$_SESSION['idAtivInic'] = $cm->id;
+		}
+	}
+	*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (($cm->id == $res->rec_ativ_id) and ($forLista < '1')){ // and (!$ati)
 			$forLista++;
@@ -322,7 +377,7 @@ foreach ($result1 as $res1){
 			$arrRec[$res1->rec_ativ_id]++; 			
 		}		
 	}
-	foreach ($modinfo->instances['assignment'] as $cm) {
+	foreach ($modinfo->instances['assign'] as $cm) {
 		if ($cm->id == $res1->rec_ativ_id){ 
 			$arrAtiv[$res1->rec_ativ_id]++; 			
 		}
@@ -371,7 +426,7 @@ foreach ($result1 as $res1){
 		}
 	} ?>
 	
-	<?php foreach ($modinfo->instances['assignment'] as $cm) {
+	<?php foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}
