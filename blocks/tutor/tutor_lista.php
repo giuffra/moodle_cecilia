@@ -162,6 +162,23 @@ $ativInicial = isset($_POST['atividade']) ? $_POST['atividade'] : NULL;
 		}
 	}
 	
+	foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $ativInicial){
+		$ati = true;
+		echo "Atividade Inicial: ".$cm->name."<br>";
+		$_SESSION['idForumInic'] = '';
+		$_SESSION['idAtivInic'] = $cm->id;		
+			$record = new stdClass();
+			$record->curso_id = $id;
+			$record->rec_ativ_id = $_SESSION['idAtivInic'];
+			$record->pre_req_id = '0';
+			$DB->insert_record('tutor_dependencia', $record, false);			
+		}
+	}
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;

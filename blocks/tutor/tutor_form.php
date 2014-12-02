@@ -38,7 +38,7 @@ $allmodules = $DB->get_records('modules', array('visible'=>1));
 $modules = array();
 foreach ($allmodules as $key=>$module) {
     $modname = $module->name;
-	echo " ".$modname;
+	echo " MÓDULO ".$modname;
     $libfile = "$CFG->dirroot/mod/$modname/lib.php";
     if (!file_exists($libfile)) {
         continue;
@@ -295,6 +295,7 @@ if ($contaAtividadesComPerfil < $contaRecAtNoCurso){
 		<?php  }	
 		
 		foreach ($modinfo->instances['quiz'] as $cm) {
+
 			if (!$cm->uservisible) {
 				continue;
 			}	
@@ -343,16 +344,17 @@ foreach ($result as $res){
 			$_SESSION['idAtivInic'] = $cm->id;
 		}
 	}
-	/*****************************************************************************************************************************
+	
 	foreach ($modinfo->instances['quiz'] as $cm) {
-		if (($cm->id == $res->rec_ativ_id) and ($ativLista < '1')){ // and (!$ati)
-			$ativLista++;
+		
+		if (($cm->id == $res->rec_ativ_id) and ($quizLista < '1')){ // and (!$ati)
+			$quizLista++;
 			echo "Atividade Inicial: ".$cm->name.'<br>';
 			$_SESSION['idForumInic'] = '';
 			$_SESSION['idAtivInic'] = $cm->id;
 		}
 	}
-	*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (($cm->id == $res->rec_ativ_id) and ($forLista < '1')){ // and (!$ati)
 			$forLista++;
