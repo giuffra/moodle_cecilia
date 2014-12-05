@@ -124,6 +124,15 @@ foreach ($modinfo->instances['assign'] as $cm) {
 		}
 	}
 	
+foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $_SESSION['idAtivInic']){		
+		echo "Atividade Inicial: ".$cm->name."<br>";				
+		}
+	}	
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
@@ -147,7 +156,10 @@ $result = $DB->get_records_sql('SELECT * FROM {tutor_dependencia} WHERE curso_id
 foreach ($result as $res){	
 			$arrPreReq[] = $res->pre_req_id.",".$res->rec_ativ_id;		
 	}
-foreach($arrPreReq as $rec){				
+foreach($arrPreReq as $rec){
+		 $what = array( 'ä','ã','à','á','â','ê','ë','è','é','ï','ì','í','ö','õ','ò','ó','ô','ü','ù','ú','û','À','Á','É','Í','Ó','Ú','ñ','Ñ','ç','Ç',' ','-','(',')',',',';',':','|','!','"','#','$','%','&','/','=','?','~','^','>','<','ª','º','.' );
+		 $by   = array( 'a','a','a','a','a','e','e','e','e','i','i','i','o','o','o','o','o','u','u','u','u','A','A','E','I','O','U','n','n','c','C','_','','','','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','_','' );
+
 				$var = explode(",",$rec);
 $course = $DB->get_record('course', array('id'=>$id), '*', MUST_EXIST);
 if ($var[0]== '0'){
@@ -155,11 +167,16 @@ if ($var[0]== '0'){
 }
 foreach ($cms as $cm) {	
 	if ($cm->id == $var[0]){
-			$string = str_replace(" ","_",$cm->name);
-			$var[0] = $string;		
+			$string = str_replace($what,$by,$cm->name);
+			$var[0] = $string;
+echo "<br>";
+			echo "var 0 ".$var[0]; 			
 		}else if($cm->id == $var[1]){			
-			$string = str_replace(" ","_",$cm->name);
-			$var[1] = $string;		
+			$string = str_replace($what,$by,$cm->name);
+			$var[1] = $string;	
+echo "<br>";
+			echo "var 1 ".$var[1];		
+echo "<br>";			
 		}
 }
 foreach ($modinfo->instances['assign'] as $cm) {
@@ -167,10 +184,23 @@ foreach ($modinfo->instances['assign'] as $cm) {
 			continue;
 		}		
 	if ($cm->id == $var[0]){			
-			$string = str_replace(" ","_",$cm->name);
+			$string = str_replace($what,$by,$cm->name);
 			$var[0] = $string;
 		}else if($cm->id == $var[1]){			
-			$string = str_replace(" ","_",$cm->name);
+			$string = str_replace($what,$by,$cm->name);
+			$var[1] = $string;
+		}
+	}
+	
+foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $var[0]){			
+			$string = str_replace($what,$by,$cm->name);
+			$var[0] = $string;
+		}else if($cm->id == $var[1]){			
+			$string = str_replace($what,$by,$cm->name);
 			$var[1] = $string;
 		}
 	}
@@ -182,10 +212,10 @@ foreach ($modinfo->instances['assign'] as $cm) {
 
 		if (($cm->name != 'News forum') && ($cm->name != 'Fórum de notícias')) {
 			if ($cm->id == $var[0]){			
-			$string = str_replace(" ","_",$cm->name);
+			$string = str_replace($what,$by,$cm->name);
 			$var[0] = $string;		
 		}else if($cm->id == $var[1]){			
-			$string = str_replace(" ","_",$cm->name);
+			$string = str_replace($what,$by,$cm->name);
 			$var[1] = $string;
 		}
 		}
@@ -199,7 +229,7 @@ foreach ($modinfo->instances['assign'] as $cm) {
 
 ?>
 <html>
-	<img src="https://chart.googleapis.com/chart?cht=gv&chl=digraph{<?php echo $graph ?>}">
+	<img src="https://chart.googleapis.com/chart?cht=gv&chl=digraph{<?php echo $graph ?>}"  width=100%>
 </html>
 <?php
 

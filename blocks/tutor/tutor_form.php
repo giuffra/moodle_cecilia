@@ -71,10 +71,11 @@ echo $OUTPUT->header();
 
 $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
 
+/*
 $cms = array();
 $resources = array();
 $assign = array();
-
+*/
 if (isset($_GET['acao'])){
 	$acao = $_GET['acao'];
 }

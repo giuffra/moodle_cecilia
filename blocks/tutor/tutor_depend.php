@@ -23,6 +23,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+ 
 require_once('../../config.php');
 require_once("$CFG->libdir/resourcelib.php");
 
@@ -68,11 +69,11 @@ $PAGE->navbar->add($strresources.' + '.$stractivities);
 echo $OUTPUT->header();
 
 $modinfo = get_fast_modinfo($course); // $modinfo->cms é um array
-
+/*
 $cms = array();
 $resources = array();
 $assign = array();
-
+*/
 
 foreach ($modinfo->cms as $cm) {
 
@@ -109,7 +110,29 @@ if (!$cms) {
     exit;
 }
 
-	?>
+	/******************
+function retorna_pais (array $filhos){
+echo "id do curso ".$course->id."<br>";
+$arrayPais = array();
+echo "filho array: ".$filhos."<br>";
+	foreach ($filhos as $f){
+		/*echo "id". $id."<br>";
+			$resultPais = $DB->get_records_sql('SELECT * FROM {tutor_dependencia} WHERE curso_id = ? AND rec_ativ_id = ?', array("2" , $f));
+			echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa ".$resultPais;
+			
+			foreach ($resultPais as $resPais){
+			echo "entrando no segundo foreach <br>";
+				$arrayPais = $resPais->pre_req_id;
+			}
+		}	
+	if (count($filhos) == 0){
+	echo "estou no if <br>";
+		return $arrayPais;
+	}else{		
+		return array_merge($arrayPais, retorna_pais($arrayPais));
+	}
+}	*/
+?>	
 <html>
  <script language="JavaScript">
    function Selecionar()
@@ -146,6 +169,16 @@ foreach ($modinfo->instances['assign'] as $cm) {
 		}
 	}
 	
+foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $_SESSION['idAtivInic']){
+		$_SESSION['ativInic']= $cm->name;		
+		echo "Atividade Inicial: ".$cm->name."<br>";				
+		}
+	}	
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
@@ -174,6 +207,15 @@ foreach ($modinfo->instances['assign'] as $cm) {
 		}
 	}
     foreach ($modinfo->instances['assign'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $recAtividade){	
+		$_SESSION['selecionada_id'] = $cm->id;
+		$_SESSION['selecionada'] = $cm->name;		
+		}
+	}
+	foreach ($modinfo->instances['quiz'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}		
@@ -223,8 +265,21 @@ foreach($arrRecAtivDoPre as $RADP){
    <p>Recursos:</p>
  <form name="listaPreReq" method="post">  
 <?php 
+/*
+ $teste = array();
+ echo "id dos pais do selecionado ". $_SESSION['selecionada_id'];
+ 
+ $teste[] = $_SESSION['selecionada_id'];
+
+$paisretornados = retorna_pais ($teste);
+echo "id dos pais do selecionado depois ". count($paisretornados);
+foreach ($paisretornados as $paisreturn){
+	echo "id dos pais do selecionado".$paisreturn."<br>";
+}
+*/
 
 	foreach ($cms as $cm) {
+	
 			$recCont++;
 			if (!isset($resources[$cm->modname][$cm->instance])) {
 				continue;
@@ -265,6 +320,27 @@ foreach($arrRecAtivDoPre as $RADP){
 		} else if($impAtiv == 0 && $AtiCont != 1){ 
 					echo "<br>";
 					echo 'Não há atividades disponíveis na disciplina para ser pré-requisito';}
+	}	
+	echo "<br>";
+		?>
+	Questionários:<br>	
+	<?php foreach ($modinfo->instances['quiz'] as $cm) {
+		$quizCont++;
+		if (!$cm->uservisible) {
+			continue;
+		}
+		if ($cm->name != $_SESSION['selecionada'] && !in_array($cm->id, $array_atPre)){
+			$impQuiz++;			
+			if (in_array($cm->id, $array_rec)){?>		
+							<input style="margin-right:5px; margin-left:70px;" type="checkbox" name="prereq[]" value="<?php echo $cm->id ?>" checked><?php echo $cm->name?>
+							<br>
+				<?php 	}else{?>		
+							<input style="margin-right:5px; margin-left:70px;" type="checkbox" name="prereq[]" value="<?php echo $cm->id ?>" ><?php echo $cm->name?>
+							<br>
+				<?php }			
+		} else if($impQuiz == 0 && $quizCont != 1){ 
+					echo "<br>";
+					echo 'Não há questionários disponíveis na disciplina para ser pré-requisito';}
 	}	
 	echo "<br>";
 	echo "Fóruns:<br>";

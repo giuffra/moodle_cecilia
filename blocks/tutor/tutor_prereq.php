@@ -126,6 +126,15 @@ foreach ($modinfo->instances['assign'] as $cm) {
 		}
 	}
 	
+foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+	if ($cm->id == $_SESSION['idAtivInic']){		
+		echo "Atividade Inicial: ".$cm->name."<br>";				
+		}
+	}
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
@@ -202,7 +211,27 @@ foreach($preRequi as $pre){
 					$DB->insert_record('tutor_dependencia', $record, false);
 				}
 		}
-	}	
+	}
+
+    foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}		
+		if ($cm->id == $pre){
+			$quiz_cont++;		
+			if ($quiz_cont == '1'){
+				echo '<b>Questionários:</b><br>';}
+				echo '<p style="margin-left:75px;">'.$cm->name.'</p>';
+				if (!in_array($cm->id, $array_rec)){
+					$record = new stdClass();
+					$record->curso_id = $id;
+					$record->rec_ativ_id = $_SESSION['selecionada_id'];
+					$record->pre_req_id = $cm->id;
+					$DB->insert_record('tutor_dependencia', $record, false);
+				}
+		}
+	}
+	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
