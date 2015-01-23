@@ -43,6 +43,32 @@ public function applicable_formats() {
            'course-view' => true, 
     'course-view-social' => false);
 }
+/*
+public function retorna_pais($filhos){
+
+echo "<br> id do curso ".$course->id."<br>";
+$arrayPais = array();
+$resultPais = array();
+$x = 2;
+echo "filho array: ".$filhos."<br>";
+	foreach ($filhos as $f){
+	echo $f;
+		//echo "id". $id."<br>";
+			$resultPais = $DB->get_records_sql('SELECT * FROM {tutor_dependencia} WHERE curso_id = ? AND rec_ativ_id = ?', array($x , $f));
+			echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa ".$resultPais;
+			
+			foreach ($resultPais as $resPais){
+			echo "entrando no segundo foreach <br>";
+				$arrayPais = $resPais->pre_req_id;
+			}
+		}	
+	if (count($filhos) == 0){
+	echo "estou no if <br>";
+		return $arrayPais;
+	}else{		
+		return this->array_merge($arrayPais, retorna_pais($arrayPais));
+	}
+}*/
  
 }   // Here's the closing bracket for the class definition 
 

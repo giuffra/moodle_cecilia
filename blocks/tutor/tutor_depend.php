@@ -110,28 +110,7 @@ if (!$cms) {
     exit;
 }
 
-	/******************
-function retorna_pais (array $filhos){
-echo "id do curso ".$course->id."<br>";
-$arrayPais = array();
-echo "filho array: ".$filhos."<br>";
-	foreach ($filhos as $f){
-		/*echo "id". $id."<br>";
-			$resultPais = $DB->get_records_sql('SELECT * FROM {tutor_dependencia} WHERE curso_id = ? AND rec_ativ_id = ?', array("2" , $f));
-			echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa ".$resultPais;
-			
-			foreach ($resultPais as $resPais){
-			echo "entrando no segundo foreach <br>";
-				$arrayPais = $resPais->pre_req_id;
-			}
-		}	
-	if (count($filhos) == 0){
-	echo "estou no if <br>";
-		return $arrayPais;
-	}else{		
-		return array_merge($arrayPais, retorna_pais($arrayPais));
-	}
-}	*/
+
 ?>	
 <html>
  <script language="JavaScript">
@@ -271,12 +250,11 @@ foreach($arrRecAtivDoPre as $RADP){
  
  $teste[] = $_SESSION['selecionada_id'];
 
-$paisretornados = retorna_pais ($teste);
+$paisretornados = retorna_pais($filhos);
 echo "id dos pais do selecionado depois ". count($paisretornados);
 foreach ($paisretornados as $paisreturn){
 	echo "id dos pais do selecionado".$paisreturn."<br>";
-}
-*/
+}*/
 
 	foreach ($cms as $cm) {
 	
