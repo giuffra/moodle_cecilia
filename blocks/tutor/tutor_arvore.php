@@ -169,14 +169,11 @@ foreach ($cms as $cm) {
 	if ($cm->id == $var[0]){
 			$string = str_replace($what,$by,$cm->name);
 			$var[0] = $string;
-echo "<br>";
-			echo "var 0 ".$var[0]; 			
+			//echo "var 0 ".$var[0]; 			
 		}else if($cm->id == $var[1]){			
 			$string = str_replace($what,$by,$cm->name);
 			$var[1] = $string;	
-echo "<br>";
-			echo "var 1 ".$var[1];		
-echo "<br>";			
+			//echo "var 1 ".$var[1];		
 		}
 }
 foreach ($modinfo->instances['assign'] as $cm) {

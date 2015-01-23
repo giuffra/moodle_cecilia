@@ -384,6 +384,11 @@ foreach ($result1 as $res1){
 			$arrAtiv[$res1->rec_ativ_id]++; 			
 		}
 	}	
+	foreach ($modinfo->instances['quiz'] as $cm) {
+		if ($cm->id == $res1->rec_ativ_id){ 
+			$arrQuiz[$res1->rec_ativ_id]++; 			
+		}
+	}
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if ($cm->id == $res1->rec_ativ_id){ 
 			$arrFor[$res1->rec_ativ_id]++; 			
@@ -412,6 +417,8 @@ foreach ($result1 as $res1){
 	<p><b>Recursos e atividades:</b></p>
    <SELECT style="margin-right:15px; width:120px" NAME="recAtiv" required="required">
 			<OPTION SELECTED></OPTION>
+			<optgroup label="Recursos">
+			 
 	<?php	
 	foreach ($cms as $cm) {
 	    if (!isset($resources[$cm->modname][$cm->instance])) {
@@ -427,19 +434,40 @@ foreach ($result1 as $res1){
 	<?php 	}
 		}
 	} ?>
-	
+	</optgroup>
+	<optgroup label="Atividades">
 	<?php foreach ($modinfo->instances['assign'] as $cm) {
 		if (!$cm->uservisible) {
 			continue;
 		}
 		if ($cm->id != $_SESSION['idAtivInic']){ 	
-			if ($arrAtiv[$cm->id] > 0){?>
+			if ($arrAt[$cm->id] > 0){?>
 				<OPTION value="<?php echo $cm->id ?>"><?php echo '(*) '.$cm->name?></OPTION>
 				<?php } else { ?>
     		  <OPTION value="<?php echo $cm->id ?>"><?php echo $cm->name ?></OPTION>	
 	<?php 	}
 		}
-	}		
+	}	
+?>
+	</optgroup>
+	<optgroup label="Questionários">
+<?php
+foreach ($modinfo->instances['quiz'] as $cm) {
+		if (!$cm->uservisible) {
+			continue;
+		}
+		if ($cm->id != $_SESSION['idAtivInic']){ 	
+			if ($arrQuiz[$cm->id] > 0){?>
+				<OPTION value="<?php echo $cm->id ?>"><?php echo '(*) '.$cm->name?></OPTION>
+				<?php } else { ?>
+    		  <OPTION value="<?php echo $cm->id ?>"><?php echo $cm->name ?></OPTION>	
+	<?php 	}
+		}
+	}
+	?>
+	</optgroup>
+	<optgroup label="Fóruns">
+	<?php
 	
 	foreach ($modinfo->instances['forum'] as $cm) {
 		if (!$cm->uservisible) {
@@ -457,6 +485,7 @@ foreach ($result1 as $res1){
 		}
 	}
 	?>
+	</optgroup>
 	</SELECT>
 		<br><br><input type="button"  style="width: 100px;" value="Seleciona" onClick="Selecionar()"/>
 		<input type="button" style="margin-left:65px; width: 200px;" value="Ver Grafo Pré-requisitos" onClick="VerGrafo()"/>
